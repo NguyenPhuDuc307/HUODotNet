@@ -1,0 +1,37 @@
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using HUODotNet.Models;
+
+namespace HUODotNet.Controllers;
+
+public class HomeController : Controller
+{
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(ILogger<HomeController> logger)
+    {
+        _logger = logger;
+    }
+
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    [Route("chinh-sach")]
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    public string Hello(string name)
+    {
+        return "xin chào " + name;
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+}
