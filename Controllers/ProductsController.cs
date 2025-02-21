@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HUODotNet.Data;
 using HUODotNet.Data.Entities;
+using HUODotNet.ViewModels;
+using AutoMapper;
 
 namespace HUODotNet.Controllers
 {
@@ -9,10 +11,12 @@ namespace HUODotNet.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Products
@@ -21,7 +25,8 @@ namespace HUODotNet.Controllers
         // [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            var listProduct = await _context.Products.ToListAsync();
+            return View(_mapper.Map<IEnumerable<ProductViewModel>>(listProduct));
         }
 
         // GET: Products/Details/5
@@ -56,17 +61,16 @@ namespace HUODotNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("them-moi")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(ProductCreateRequest request)
         {
             if (ModelState.IsValid)
             {
-                product.CreatedAt = DateTime.Now;
-                product.UpdatedAt = product.CreatedAt;
+                var product = _mapper.Map<Product>(request);
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(request);
         }
 
         // GET: Products/Edit/5

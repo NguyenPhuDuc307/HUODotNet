@@ -1,13 +1,11 @@
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+namespace HUODotNet.ViewModels;
 
-namespace HUODotNet.Data.Entities;
-
-public class Product
+public class ProductViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = String.Empty;
     public string Description { get; set; } = String.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+
 }
