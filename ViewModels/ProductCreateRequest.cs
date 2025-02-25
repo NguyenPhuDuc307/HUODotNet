@@ -10,4 +10,7 @@ public class ProductCreateRequest
 
     [DisplayName("Mô tả")]
     public string? Description { get; set; }
+
+    [DisplayName("Hình ảnh")]
+    public IFormFile? ImageFile { get; set; }
 }

@@ -7,9 +7,7 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<ProductCreateRequest, Product>()
-            .ForMember(x => x.CreatedAt, opt => opt.MapFrom(_ => DateTime.Now))
-            .ForMember(x => x.UpdatedAt, opt => opt.MapFrom(_ => DateTime.Now));
+        CreateMap<ProductCreateRequest, Product>();
         CreateMap<Product, ProductViewModel>();
     }
 }
